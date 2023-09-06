@@ -1,0 +1,53 @@
+---
+- name: Refresh repositories
+  community.general.pacman:
+    update_cache: true
+
+- name: Install pacman packages
+  community.general.pacman:
+    name: "{{ pacman_packages }}"
+    state: latest
+
+- name: Clone yay
+  become_user: "{{ username }}"
+  git:
+    repo: https://aur.archlinux.org/yay-bin.git
+    dest: "/tmp/yay"
+    update: true
+
+- name: Build and install yay
+  become_user: "{{ username }}"
+  command:
+    chdir: "/tmp/yay"
+    cmd: "makepkg -sfi --noconfirm"
+    creates: /usr/bin/yay
+
+- name: Install package from AUR using a Pacman compatible AUR helper
+  become_user: "{{ username }}"
+  command: >
+    yay -S
+      --answerclean none --answeredit none --answerupgrade none --answerdiff none
+      --removemake --noconfirm --combinedupgrade --needed
+      {% for pkg in aur_packages %}
+        {{ pkg | quote }}
+      {% endfor %}
+
+- name: Remove the flathub remote from the system installation
+  community.general.flatpak_remote:
+    name: flathub
+    state: absent
+
+- name: Add the flathub flatpak repository remote to the user installation
+  become_user: "{{ username }}"
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: user
+
+- name: Install Flatpaks from Flathub
+  become_user: "{{ username }}"
+  community.general.flatpak:
+    name: "{{ flathub_packages }}"
+    method: user
+    state: present

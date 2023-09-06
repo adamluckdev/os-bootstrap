@@ -1,0 +1,34 @@
+---
+- name: dotfiles | Ensure git is installed
+  package: name=git state=present
+  become: true
+
+- name: dotfiles | Check for repository
+  become_user: "{{ username }}"
+  stat:
+    path: "{{ dotfiles_dir }}"
+  register: dotfiles_head
+  changed_when: false
+
+- name: dotfiles | Clone repository
+  become_user: "{{ username }}"
+  git:
+    repo: "{{ dotfiles_repo }}"
+    dest: "{{ dotfiles_dir }}"
+  when: not dotfiles_head.stat.exists
+
+- name: dotfiles | Stow
+  become_user: "{{ username }}"
+  shell: make i3
+  args:
+    chdir: "{{ dotfiles_dir }}"
+    executable: "{{ shell }}"
+
+- name: dotfiles | link default display configuration
+  become_user: "{{ username }}"
+  file:
+    src: "/home/{{ username }}/.config/x11/multidisplay/x220-builtin.sh"
+    dest: "/home/{{ username }}/.config/x11/multidisplay/default.sh"
+    state: link
+    force: yes
+  when: machine == 'x220'

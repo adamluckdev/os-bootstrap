@@ -1,0 +1,16 @@
+---
+- name: Install nvm {{ nvm_version }}
+  become_user: "{{ username }}"
+  git:
+    repo: https://github.com/creationix/nvm.git
+    dest: "{{ nvm_install_path }}"
+    version: "v{{ nvm_version }}"
+
+- name: Install Node.js lts
+  become_user: "{{ username }}"
+  shell: ". ./nvm.sh && nvm install --lts"
+  args:
+    chdir: "{{ nvm_install_path }}"
+    executable: "{{ shell }}"
+  register: nvm_install_result
+  changed_when: "'is already installed.' not in nvm_install_result.stderr"

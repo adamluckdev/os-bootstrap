@@ -1,0 +1,8 @@
+---
+- name: Install pacman packages
+  community.general.pacman:
+    name:
+      - xf86-video-intel
+      - libva-intel-driver
+      - intel-ucode
+    state: latest

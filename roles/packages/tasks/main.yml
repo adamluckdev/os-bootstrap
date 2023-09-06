@@ -1,0 +1,11 @@
+---
+- name: packages | install base packages
+  import_tasks: packages.yml
+
+- name: packages | install x220 specific packages
+  import_tasks: x220.yml
+  when: machine == 'x220'
+
+- name: packages | install nvm
+  import_tasks: nvm.yml
+  when: enable_nvm | default(False)

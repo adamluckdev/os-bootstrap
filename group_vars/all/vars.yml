@@ -1,0 +1,119 @@
+# User
+username: adam
+password: password_placeholder
+shell: /usr/bin/zsh
+sudo_group: wheel
+
+# Dotfiles
+
+dotfiles_repo: https://gitlab.com/adamluckdev/dotfiles.git
+dotfiles_dir: "/home/{{ username }}/dotfiles"
+
+# Packages
+
+machine: machine_placeholder
+
+pacman_packages:
+  - acpi
+  - alacritty
+  - arandr
+  - arc-gtk-theme
+  - atool
+  - awesome-terminal-fonts
+  - bat
+  - dmenu
+  - dosfstools
+  - dunst
+  - exfat-utils
+  - feh
+  - ffmpeg
+  - firefox
+  - flatpak
+  - galculator
+  - git
+  - gst-libav
+  - gst-plugin-pipewire
+  - gst-plugins-bad
+  - gst-plugins-ugly
+  - gvfs
+  - gvfs-afc
+  - gvfs-gphoto2
+  - gvfs-mtp
+  - gvfs-nfs
+  - gvfs-smb
+  - htop
+  - hwinfo
+  - imagemagick
+  - i3blocks
+  - i3lock
+  - i3status
+  - i3-gaps
+  - jq
+  - libgsf
+  - libnotify
+  - libopenraw
+  - libreoffice-fresh
+  - lxappearance-gtk3
+  - maim
+  - mediainfo
+  - mpv
+  - network-manager-applet
+  - networkmanager-openvpn
+  - noto-fonts
+  - noto-fonts-emoji
+  - ntfs-3g
+  - openvpn
+  - pamixer
+  - pcmanfm-gtk3
+  - picom
+  - pipewire
+  - pipewire-pulse
+  - playerctl
+  - polkit-gnome
+  - poppler
+  - power-profiles-daemon
+  - pulsemixer
+  - ripgrep
+  - rofi
+  - stow
+  - sxiv
+  - sysstat
+  - tmux
+  - ttf-jetbrains-mono
+  - ttf-ubuntu-font-family
+  - tumbler
+  - unrar
+  - unzip
+  - wireplumber
+  - xarchiver
+  - xcape
+  - xclip
+  - xdotool
+  - xdg-user-dirs
+  - xdg-utils
+  - xf86-input-libinput
+  - xorg
+  - xorg-xinit
+  - xz
+  - yt-dlp
+  - zathura
+  - zathura-pdf-mupdf
+
+aur_packages:
+  - brave-bin
+  - qogir-icon-theme
+  - zsh-fast-syntax-highlighting-git
+
+flathub_packages:
+  - com.bitwarden.desktop
+  - com.spotify.Client
+  - md.obsidian.Obsidian
+  - org.gimp.GIMP
+  - org.mozilla.Thunderbird
+  - org.telegram.desktop
+
+# Packages - nvm
+
+enable_nvm: true
+nvm_install_path: "/home/{{ username }}/.nvm"
+nvm_version: 0.39.3
